@@ -33,16 +33,17 @@ public class Main {
 */
 
         try {
-            List<Map<String, Object>> aeropuertoDataList = objectMapper.readValue(file, List.class);
-
-            for (Map<String, Object> aeropuertoData : aeropuertoDataList) {
-                aeropuertoList.add(objectMapper.convertValue(aeropuertoData, Aeropuerto.class));
+           // List<Map<String, Object>> aeropuertoDataList = objectMapper.readValue(file, List.class);
+            List<Object> aeropuertoDataList = objectMapper.readValue(file, List.class);
+           // System.out.println(aeropuertoDataList);
+            for (Object aeropuertoData :aeropuertoDataList) {
+                aeropuertoList.add((Aeropuerto) objectMapper.convertValue(aeropuertoData, Aeropuerto.class));
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(Aeropuerto a : aeropuertoList){
+     /*   for(Aeropuerto a : aeropuertoList){
             for(Avion av : a.getAviones()) {
                 System.out.println("piloto: "+av.getPiloto()+" - capacidad: "+av.getCapacidad_pasajeros());
             }
@@ -64,6 +65,14 @@ public class Main {
             for(Avion av : a.getAviones()) {
                 System.out.println("piloto: "+av.getPiloto()+" - capacidad: "+av.getCapacidad_pasajeros());
             }
+        }
+
+      */
+
+        try {
+            System.out.println(new Json().fromJsonArrayToList(archi.leerArchivo("G6UyHYt7.json"), Aeropuerto.class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 
